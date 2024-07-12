@@ -152,10 +152,22 @@ class TencentMapController: NSObject {
     ] as [String: Any])
   }
 
-  /// 当点击点标记时触发该回调（Android Only）
-  func onTapMarker(markerId: String) {
+  /// 当点击点标记时触发该回调
+    func onTapMarker(markerId: String, annotationView: QAnnotationView? = nil) {
+      var annotationId = markerId
+
+      if (annotationView?.annotation != nil) {
+              for (key, value) in api.markers {
+                  if value.coordinate.latitude == annotationView!.annotation.coordinate.latitude &&
+                        value.coordinate.longitude == annotationView!.annotation.coordinate.longitude {
+                      annotationId = key
+                      break
+                  }
+              }
+          }
+
     channel.invokeMethod("onTapMarker", arguments: [
-      "markerId": markerId,
+      "markerId": annotationId,
     ] as [String: Any])
   }
 

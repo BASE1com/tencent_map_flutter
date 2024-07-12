@@ -24,6 +24,10 @@ class TencentMapViewDelegate: NSObject, QMapViewDelegate {
     controller.onScaleViewChanged(scale: scale)
   }
 
+  func mapView(_ mapView: QMapView, didSelect view: QAnnotationView) {
+    controller.onTapMarker(markerId: "", annotationView: view)
+  }
+
   func mapView(_ mapView: QMapView, didTapAt coordinate: CLLocationCoordinate2D) {
     controller.onPress(position: coordinate.position)
   }
